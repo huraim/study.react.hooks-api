@@ -10,16 +10,15 @@ export const TodoContext = React.createContext(); //useContext
 
 const TodoStore = () => {
   const [todos, setTodos] = useState([]);
-  const [newTodo, setNewTodo] = useState();
+  // const [newTodo, setNewTodo] = useState(); //useRef로 대체
 
   const loading = useFetch(setTodos, 'http://localhost:8080/todos');
   
-  const changeInputData = (e) => {
-    setNewTodo(e.target.value);
-  }
+  // const changeInputData = (e) => { //useRef로 대체
+  //   setNewTodo(e.target.value);
+  // }
 
-  const addTodo = (e) => {
-    e.preventDefault();
+  const addTodo = (newTodo) => {
     setTodos([...todos, {'id':todos.length, 'title': newTodo, 'status':'todo'}]); //원래 todo 배열에, 입력한 값 넣기
   }
 
@@ -41,7 +40,7 @@ const TodoStore = () => {
   }, [todos]) //todos 변화만 감지
 
   return (
-    <TodoContext.Provider value={{todos, addTodo, changeInputData, loading, changeTodoStatus}}>
+    <TodoContext.Provider value={{todos, addTodo, loading, changeTodoStatus}}>
 
       <Header />
 
