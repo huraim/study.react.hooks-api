@@ -1,15 +1,17 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Item from './Item'
+import {TodoContext} from './TodoStore.js'
 
-function List(props) {
+function List() {
+  const {todos, loading, changeTodoStatus} = useContext(TodoContext);
 
   let todoList = <div>loading...</div>
-  if(!props.loading) {
-    todoList = props.todos.map( (todo) => (
+  if(!loading) {
+    todoList = todos.map( (todo) => (
       <Item 
         key={todo.id}
         todo={todo} 
-        changeTodoStatus={props.changeTodoStatus}
+        changeTodoStatus={changeTodoStatus}
       />
     ))
   }

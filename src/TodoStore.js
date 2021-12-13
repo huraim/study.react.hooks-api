@@ -4,8 +4,11 @@ import './App.css';
 import List from './List'
 import useFetch from './useFetch.js'
 import Header from './Header';
+import Form from './Form';
 
-const App = () => {
+export const TodoContext = React.createContext(); //useContext
+
+const TodoStore = () => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState();
 
@@ -38,20 +41,16 @@ const App = () => {
   }, [todos]) //todos 변화만 감지
 
   return (
-    <>
-      <Header todos={todos} />
-      <form action="">
-        <input type="text" name="" onChange={changeInputData}/>
-        <button onClick={addTodo}>할일추가</button>
-      </form>
+    <TodoContext.Provider value={{todos, addTodo, changeInputData, loading, changeTodoStatus}}>
 
-      <List 
-        todos={todos}
-        loading={loading}
-        changeTodoStatus={changeTodoStatus}
-      />
-    </>
+      <Header />
+
+      <Form />
+
+      <List />
+
+    </TodoContext.Provider>
   )
 }
 
-export default App;
+export default TodoStore;
